@@ -45,6 +45,15 @@ contract("Lottery", (accounts) => {
       assert(finalBalance > initialBalance);
   });
 
+    it("should not allow picking a winner when there are no players", async () => {
+        try {
+            await lottery.pickWinner({ from: manager });
+            assert.fail("Expected an error but did not get one");
+        } catch (error) {
+            assert(error.message.includes("No players have entered yet"));
+        }
+    });
+
     it("should reset players after picking a winner", async () => {
         await lottery.enter({ from: player1, value: web3.utils.toWei("0.02", "ether") });
         await lottery.enter({ from: player2, value: web3.utils.toWei("0.02", "ether") });
