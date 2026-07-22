@@ -1,5 +1,6 @@
 node_modules
-smart-contract/build/contracts/*.json
-build
+artifacts
+cache
+types
 
 .claude

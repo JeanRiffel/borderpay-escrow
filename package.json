@@ -1,12 +1,12 @@
 {
+  "type": "module",
   "scripts": {
-    "build": "truffle compile",
-    "migrate": "truffle migrate"
-  },
-  "dependencies": {
-    "solc": "^0.8.0"
+    "build": "hardhat compile",
+    "test": "hardhat test",
+    "migrate": "hardhat ignition deploy ignition/modules/Lottery.js"
   },
   "devDependencies": {
-    "truffle": "^5.11.5"
+    "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.7",
+    "hardhat": "^3.11.0"
   }
 }
