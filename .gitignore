@@ -1,3 +1,5 @@
 node_modules
 smart-contract/build/contracts/*.json
 build
+
+.claude
