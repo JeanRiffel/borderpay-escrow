@@ -14,20 +14,15 @@ The project is divided into 3 projects:
 
 - [Solidity](https://soliditylang.org/): 
 Solidity is the programming language for writing smart contracts on the Ethereum blockchain. Learn more about Solidity.
-- [Ganache](https://trufflesuite.com/ganache/): Ganache is employed to run the Ethereum blockchain locally. More details about Ganache can be found.
-- [Truffle](https://trufflesuite.com/): Truffle is the chosen framework for smart contract development.
+- [Hardhat](https://hardhat.org/): Hardhat is the chosen framework for smart contract development, testing, and deployment. It also runs a local, in-process Ethereum network for development.
 
 
 #### Installation and Execution Instructions
 
-1. Initialize Truffle project:
+1. Install dependencies:
 
 ```bash
-npm install -g truffle
-```
-
-```bash
-truffle init
+npm install
 ```
 
 2. Create a new Solidity file in the contracts folder.
@@ -35,32 +30,32 @@ truffle init
 3. Compile the Solidity program:
 
 ```bash
-truffle compile
+npm run build
 ```
 
-4. Migrate the smart contract:
+4. Deploy the smart contract (via Hardhat Ignition):
 
 ```bash
-truffle migrate
+npm run migrate
 ```
 
-5. Access the Truffle console:
+5. Access the Hardhat console:
 
 ```bash
-truffle console
+npx hardhat console
 ```
 
 6. Unit testing of the contract
 ```bash
-truffle test
+npm test
 ```
 
 ### Running the contract 
 
 Whether you followed the previous steps: 3, 4 and 5.
 
-You are now at truffle console right, so type these commands:
-- let lottery = await Lottery.deployed()
-- lottery.contractName() 
+You are now at the Hardhat console, so type these commands:
+- const lottery = await ethers.deployContract("Lottery")
+- await lottery.contractName()
 
 As output you should see the message: The Lottery Contract is OnLine
