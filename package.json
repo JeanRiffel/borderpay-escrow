@@ -1,4 +1,6 @@
 {
+  "name": "borderpay-escrow",
+  "description": "BorderPay Escrow — educational Solidity smart contract implementing a conditional payment escrow (sender/beneficiary/arbiter).",
   "type": "module",
   "scripts": {
     "build": "hardhat compile",

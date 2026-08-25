@@ -1,4 +1,6 @@
-# Payment Escrow Smart Contract
+# BorderPay Escrow
+
+Smart contract repo of the **BorderPay** project (see also [borderpay-api](https://github.com/JeanRiffel/borderpay-api) and [borderpay-app](https://github.com/JeanRiffel/borderpay-app)).
 
 ## Project Overview
 
@@ -6,7 +8,7 @@ This project is an educational Ethereum smart contract implementing a conditiona
 
 The domain (hold funds until a cross-border transfer is confirmed, then release or refund) mirrors the settlement flow of [money-across-borders](https://github.com/JeanRiffel/money-across-borders), a Clean Architecture/DDD demo of a cross-border payments backend. This repo is not part of that project — it's a standalone contract exploring the same idea (custody funds, confirm off-chain, settle on-chain) on Solidity.
 
-> This repo previously hosted a different contract — a pseudo-random lottery — and had two sibling repos (a back-end and a front-end) built against it. Those repos target the old `Lottery` contract and are not compatible with `PaymentEscrow`.
+> This repo previously hosted a different contract — a pseudo-random lottery — and had two sibling repos (a back-end and a front-end) built against it, now renamed `borderpay-api` and `borderpay-app`. Those repos target the old `Lottery` contract and are not compatible with `PaymentEscrow`.
 
 ## For this project I used
 
