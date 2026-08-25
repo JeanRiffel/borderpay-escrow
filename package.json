@@ -3,7 +3,7 @@
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
-    "migrate": "hardhat ignition deploy ignition/modules/Lottery.js"
+    "migrate": "hardhat ignition deploy ignition/modules/PaymentEscrow.js"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.7",

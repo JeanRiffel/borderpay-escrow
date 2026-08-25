@@ -1,21 +1,17 @@
-# Lottery Smart Contract
+# Payment Escrow Smart Contract
 
 ## Project Overview
 
-This project serves educational purposes, offering a web application that allows users to place bets on randomly generated numbers using Ether. A smart contract manages the bets, receives Ether, and determines the winning number randomly. The participant with the correct number receives the accumulated Ether sum.
+This project is an educational Ethereum smart contract implementing a conditional payment escrow. A `sender` opens a payment for a `beneficiary` and funds it with Ether; the funds are held in the contract until a trusted `arbiter` confirms — off-chain — that the underlying transfer settled (`releasePayment`) or failed/was cancelled (`refundPayment`). Released and refunded funds are credited to the recipient's balance and withdrawn via a pull payment (`withdraw()`), rather than pushed directly, so a misbehaving recipient can never block the settlement of other payments.
 
-The project is divided into 3 projects:
+The domain (hold funds until a cross-border transfer is confirmed, then release or refund) mirrors the settlement flow of [money-across-borders](https://github.com/JeanRiffel/money-across-borders), a Clean Architecture/DDD demo of a cross-border payments backend. This repo is not part of that project — it's a standalone contract exploring the same idea (custody funds, confirm off-chain, settle on-chain) on Solidity.
 
-- Lottery Smart Contract*: This handle the bets and decided the winner of the bets. Also reward the winner with all money available;
-- [Back-end Lottery Smart Contract](https://github.com/JeanRiffel/back-end-lottery-smart-contract):  This handle the requests from the user and send it to the smart contract.
-- [Front-end Lottery Smart Contract](https://github.com/JeanRiffel/front-end-lottery-smart-contract): This is the user interface that the use perform actions.
+> This repo previously hosted a different contract — a pseudo-random lottery — and had two sibling repos (a back-end and a front-end) built against it. Those repos target the old `Lottery` contract and are not compatible with `PaymentEscrow`.
 
 ## For this project I used
 
-- [Solidity](https://soliditylang.org/): 
-Solidity is the programming language for writing smart contracts on the Ethereum blockchain. Learn more about Solidity.
-- [Hardhat](https://hardhat.org/): Hardhat is the chosen framework for smart contract development, testing, and deployment. It also runs a local, in-process Ethereum network for development.
-
+- [Solidity](https://soliditylang.org/): the programming language for writing smart contracts on the Ethereum blockchain.
+- [Hardhat](https://hardhat.org/): the chosen framework for smart contract development, testing, and deployment. It also runs a local, in-process Ethereum network for development.
 
 #### Installation and Execution Instructions
 
@@ -25,37 +21,50 @@ Solidity is the programming language for writing smart contracts on the Ethereum
 npm install
 ```
 
-2. Create a new Solidity file in the contracts folder.
-
-3. Compile the Solidity program:
+2. Compile the Solidity program:
 
 ```bash
 npm run build
 ```
 
-4. Deploy the smart contract (via Hardhat Ignition):
+3. Deploy the smart contract (via Hardhat Ignition). By default the deploying account acts as the arbiter; pass `--parameters` to use a dedicated arbiter address instead:
 
 ```bash
 npm run migrate
+# or, with a dedicated arbiter address:
+npx hardhat ignition deploy ignition/modules/PaymentEscrow.js --parameters '{"PaymentEscrowModule":{"arbiter":"0x..."}}'
 ```
 
-5. Access the Hardhat console:
+4. Access the Hardhat console:
 
 ```bash
 npx hardhat console
 ```
 
-6. Unit testing of the contract
+5. Unit testing of the contract:
+
 ```bash
 npm test
 ```
 
-### Running the contract 
+### Running the contract
 
-Whether you followed the previous steps: 3, 4 and 5.
+Whether you followed the previous steps: 2, 3 and 4.
 
 You are now at the Hardhat console, so type these commands:
-- const lottery = await ethers.deployContract("Lottery")
-- await lottery.contractName()
 
-As output you should see the message: The Lottery Contract is OnLine
+```js
+const escrow = await ethers.deployContract("PaymentEscrow", [(await ethers.getSigners())[0].address])
+await escrow.contractName()
+```
+
+As output you should see the message: `The PaymentEscrow Contract is OnLine`
+
+### Payment lifecycle
+
+```
+createPayment(id, beneficiary)  -> Pending
+fundPayment(id) { value }       -> Funded
+releasePayment(id)  [arbiter]   -> Released  (beneficiary can withdraw())
+refundPayment(id)   [arbiter]   -> Refunded  (sender can withdraw())
+```
