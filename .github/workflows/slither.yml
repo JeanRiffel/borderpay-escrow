@@ -1,0 +1,31 @@
+name: Slither
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  analyze:
+    name: Static analysis
+    runs-on: ubuntu-latest
+    # Report-only for now: current findings are Low/Informational/Optimization,
+    # matching this contract's intentional pull-payment design (see CLAUDE.md).
+    # Flip this off once findings are triaged and a failure threshold is agreed on.
+    continue-on-error: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Slither
+        run: pip install slither-analyzer
+
+      - name: Run Slither
+        run: slither contracts/PaymentEscrow.sol

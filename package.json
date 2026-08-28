@@ -1,14 +1,23 @@
 {
   "name": "borderpay-escrow",
   "description": "BorderPay Escrow — educational Solidity smart contract implementing a conditional payment escrow (sender/beneficiary/arbiter).",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
-    "migrate": "hardhat ignition deploy ignition/modules/PaymentEscrow.js"
+    "migrate": "hardhat ignition deploy ignition/modules/PaymentEscrow.js",
+    "lint:sol": "solhint 'contracts/**/*.sol'",
+    "format": "prettier --write 'contracts/**/*.sol'",
+    "format:check": "prettier --check 'contracts/**/*.sol'",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.7",
-    "hardhat": "^3.11.0"
+    "hardhat": "^3.11.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.9.6",
+    "prettier-plugin-solidity": "^2.4.1",
+    "solhint": "^6.2.4"
   }
 }

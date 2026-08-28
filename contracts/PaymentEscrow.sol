@@ -20,7 +20,11 @@ contract PaymentEscrow {
     mapping(bytes32 => Payment) public payments;
     mapping(address => uint256) public pendingWithdrawals;
 
-    event PaymentCreated(bytes32 indexed paymentId, address indexed sender, address indexed beneficiary);
+    event PaymentCreated(
+        bytes32 indexed paymentId,
+        address indexed sender,
+        address indexed beneficiary
+    );
     event PaymentFunded(bytes32 indexed paymentId, uint256 amount);
     event PaymentReleased(bytes32 indexed paymentId, address indexed beneficiary, uint256 amount);
     event PaymentRefunded(bytes32 indexed paymentId, address indexed sender, uint256 amount);
