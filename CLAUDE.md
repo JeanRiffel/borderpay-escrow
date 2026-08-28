@@ -19,8 +19,17 @@ The project is ESM (`"type": "module"` in `package.json`) — config, scripts, a
 - `npm test` / `npx hardhat test` — run all tests in `test/`.
 - `npx hardhat test test/PaymentEscrow.test.js` — run a single test file.
 - `npx hardhat console` — interactive console against the configured network; `const escrow = await ethers.deployContract("PaymentEscrow", [arbiterAddress])` deploys a throwaway instance to play with.
+- `npm run lint:sol` / `npx solhint 'contracts/**/*.sol'` — Solhint (`solhint:recommended`, config in `.solhint.json`).
+- `npm run format` / `npm run format:check` — Prettier with `prettier-plugin-solidity` (config in `.prettierrc.json`); `format` writes, `format:check` only verifies.
 
 Tests instantiate their own network handle per file via `const { ethers } = await network.create();` (see `test/PaymentEscrow.test.js`) rather than relying on injected globals.
+
+## Tooling
+
+- **Pre-commit hook** (Husky, `.husky/pre-commit`): runs `lint:sol`, `format:check`, then `test` on every `git commit`; registered via the `prepare` script on `npm install`.
+- **CI** (`.github/workflows/`): `ci.yml` runs a `lint` job (Solhint + Prettier check) and a `test` job (compile + full suite, Node 20.x/22.x) on push/PR to `main`. `slither.yml` runs Slither static analysis but is currently non-blocking (`continue-on-error: true` — current findings are Low/Informational/Optimization, consistent with this contract's intentional low-level-call pull-payment design).
+- **Dependabot** (`.github/dependabot.yml`): weekly PRs for `npm` and `github-actions` dependency updates.
+- **VS Code debugging** (`.vscode/launch.json`): "Debug Hardhat tests" and "Debug current test file" configs run the Mocha suite under Node's debugger for breakpoints in `test/*.test.js`. There's no source-level Solidity step debugger wired up (no such mature/pluggable tool exists for Hardhat 3 yet); use `hardhat/console.sol` + `console.log(...)` inside the contract to inspect values during a test run instead.
 
 ## Architecture
 
