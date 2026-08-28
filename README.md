@@ -1,5 +1,8 @@
 # BorderPay Escrow
 
+[![CI](https://github.com/JeanRiffel/borderpay-escrow/actions/workflows/ci.yml/badge.svg)](https://github.com/JeanRiffel/borderpay-escrow/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Smart contract repo of the **BorderPay** project (see also [borderpay-api](https://github.com/JeanRiffel/borderpay-api) and [borderpay-app](https://github.com/JeanRiffel/borderpay-app)).
 
 ## Project Overview
@@ -49,6 +52,13 @@ npx hardhat console
 npm test
 ```
 
+6. Lint and format the Solidity source:
+
+```bash
+npm run lint:sol       # Solhint
+npm run format:check   # Prettier (use `npm run format` to auto-fix)
+```
+
 ### Running the contract
 
 Whether you followed the previous steps: 2, 3 and 4.
@@ -70,3 +80,11 @@ fundPayment(id) { value }       -> Funded
 releasePayment(id)  [arbiter]   -> Released  (beneficiary can withdraw())
 refundPayment(id)   [arbiter]   -> Refunded  (sender can withdraw())
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the branching, testing, and CI expectations.
+
+## License
+
+[MIT](LICENSE)
