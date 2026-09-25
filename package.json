@@ -16,7 +16,7 @@
     "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.7",
     "hardhat": "^3.11.0",
     "husky": "^9.1.7",
-    "prettier": "^3.9.6",
+    "prettier": "^3.9.8",
     "prettier-plugin-solidity": "^2.4.1",
     "solhint": "^6.2.4"
   }
