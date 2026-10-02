@@ -13,7 +13,7 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.7",
+    "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^4.0.0",
     "hardhat": "^3.11.0",
     "husky": "^9.1.7",
     "prettier": "^3.9.6",
